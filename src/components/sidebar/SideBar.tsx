@@ -34,6 +34,7 @@ export default function SideBar() {
           <Image
             alt="Logo"
             src={AirQoLogo}
+            priority
             className="rounded-full"
             width={50}
             height={50}

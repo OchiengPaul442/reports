@@ -62,7 +62,9 @@ export default function Header() {
   const List = [
     {
       name: "Support",
-      onClick: () => router.push("/support"),
+      onClick: () => {
+        window.location.href = "mailto:support@airqo.net";
+      },
       icon: <HiOutlineSupport className="mr-2 h-4 w-4" />,
     },
     {
@@ -78,82 +80,84 @@ export default function Header() {
   ];
 
   return (
-    <nav className="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-      <div className="hidden md:block" />
-      <div className="md:hidden">
-        <Drawer direction="right">
-          <DrawerTrigger asChild>
-            <button className="cursor-pointer">
-              <IoIosMenu size={30} />
-            </button>
-          </DrawerTrigger>
-          <DrawerContent className="bg-blue-600 border-none text-white flex flex-col items-center rounded-none">
-            <DrawerHeader className="mx-auto w-full space-y-4 max-w-sm">
-              <div className="flex flex-row items-center justify-start space-x-3">
-                <Image
-                  alt="Logo"
-                  src={AirQoLogo}
-                  className="rounded-full"
-                  width={50}
-                  height={50}
-                />
-                <h1 className="text-xl font-bold">AQ Report</h1>
+    <div className="sticky top-0 z-50">
+      <nav className="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+        <div className="hidden md:block" />
+        <div className="md:hidden">
+          <Drawer direction="right">
+            <DrawerTrigger asChild>
+              <button className="cursor-pointer">
+                <IoIosMenu size={30} />
+              </button>
+            </DrawerTrigger>
+            <DrawerContent className="bg-blue-600 border-none text-white flex flex-col items-center rounded-none">
+              <DrawerHeader className="mx-auto w-full space-y-4 max-w-sm">
+                <div className="flex flex-row items-center justify-start space-x-3">
+                  <Image
+                    alt="Logo"
+                    src={AirQoLogo}
+                    className="rounded-full"
+                    width={50}
+                    height={50}
+                  />
+                  <h1 className="text-xl font-bold">AQ Report</h1>
+                </div>
+              </DrawerHeader>
+              <Separator className="bg-white" />
+              <div className="flex flex-col items-center space-y-3 w-full justify-center p-4">
+                {links.map(({ href, icon: Icon, label }) => (
+                  <Link href={href} className="w-full" key={href}>
+                    <span
+                      className={`flex flex-row rounded-lg items-center justify-start space-x-3 p-2 w-full  ${
+                        isActive(href) ? "bg-gray-800 text-white" : ""
+                      }`}
+                    >
+                      <Icon />
+                      <span>{label}</span>
+                    </span>
+                  </Link>
+                ))}
               </div>
-            </DrawerHeader>
-            <Separator className="bg-white" />
-            <div className="flex flex-col items-center space-y-3 w-full justify-center p-4">
-              {links.map(({ href, icon: Icon, label }) => (
-                <Link href={href} className="w-full" key={href}>
-                  <span
-                    className={`flex flex-row rounded-lg items-center justify-start space-x-3 p-2 w-full  ${
-                      isActive(href) ? "bg-gray-800 text-white" : ""
-                    }`}
-                  >
-                    <Icon />
-                    <span>{label}</span>
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </DrawerContent>
-        </Drawer>
-      </div>
-      <div className="flex items-center space-x-4">
-        <AiOutlineBell
-          className="text-gray-600 text-2xl rounded-full bg-gray-200 p-2"
-          size={34}
-        />
-        <div className="relative">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <div>
-                <BsPerson
-                  size={34}
-                  className="text-gray-600 text-2xl cursor-pointer rounded-full bg-gray-200 p-2"
-                />
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="relative right-6 w-52 bg-white">
-              <DropdownMenuLabel>
-                {session?.user?.email && session?.user?.email.length > 30
-                  ? session?.user?.email?.slice(0, 30) + "..."
-                  : session?.user?.email}
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator className="bg-gray-400" />
-              {List.map((item, index) => (
-                <DropdownMenuCheckboxItem
-                  key={index}
-                  className="pl-1 w-full rounded-md cursor-pointer"
-                  onClick={item.onClick}
-                >
-                  {item.icon}
-                  <span>{item.name}</span>
-                </DropdownMenuCheckboxItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+            </DrawerContent>
+          </Drawer>
         </div>
-      </div>
-    </nav>
+        <div className="flex items-center space-x-4">
+          <AiOutlineBell
+            className="text-gray-600 text-2xl rounded-full bg-gray-200 p-2 disabled:opacity-50 cursor-not-allowed"
+            size={34}
+          />
+          <div className="relative">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div>
+                  <BsPerson
+                    size={34}
+                    className="text-gray-600 text-2xl cursor-pointer rounded-full bg-gray-200 p-2"
+                  />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="relative right-6 w-52 bg-white">
+                <DropdownMenuLabel>
+                  {session?.user?.email && session?.user?.email.length > 30
+                    ? session?.user?.email?.slice(0, 30) + "..."
+                    : session?.user?.email}
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-gray-400" />
+                {List.map((item, index) => (
+                  <DropdownMenuCheckboxItem
+                    key={index}
+                    className="pl-1 w-full rounded-md cursor-pointer"
+                    onClick={item.onClick}
+                  >
+                    {item.icon}
+                    <span>{item.name}</span>
+                  </DropdownMenuCheckboxItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+      </nav>
+    </div>
   );
 }

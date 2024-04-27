@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import ErrorBoundaryImage from "@/public/images/ErrorBoundary.png";
 
 interface ErrorProps {
@@ -10,6 +10,7 @@ interface ErrorProps {
 }
 
 const Error: React.FC<ErrorProps> = ({ error, reset }) => {
+  const router = useRouter();
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -36,12 +37,12 @@ const Error: React.FC<ErrorProps> = ({ error, reset }) => {
           </p>
         </div>
         <div>
-          <Link
-            href="/report"
+          <button
+            onClick={() => router.push("/report")}
             className="px-6 py-3 text-lg font-medium text-white bg-blue-700 rounded hover:bg-blue-800"
           >
             Go Home
-          </Link>
+          </button>
         </div>
       </div>
     </div>

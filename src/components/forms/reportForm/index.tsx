@@ -25,17 +25,20 @@ import {
   setReportData,
 } from "@/lib/reduxSlices/reportSlice";
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
 import { RingLoader } from "react-spinners";
 import { v4 as uuidv4 } from "uuid";
 
 const reportTypes = [
-  { value: "airqo", label: "AirQo Template" },
+  // { value: "airqo", label: "AirQo Template" },
   { value: "standard", label: "Standard Template" },
 ];
 
 export default function ReportGenerator() {
   const dispatch = useDispatch();
   const router = useRouter();
+  const { theme } = useTheme();
+  const loaderColor = theme === "dark" ? "#fff" : "#013ee6";
   const [grids, setGrids] = useState([]);
   const [loading, setLoading] = useState(false);
   const [islLoading, setIsLoading] = useState(false);
@@ -281,7 +284,7 @@ export default function ReportGenerator() {
       )}
       {islLoading && (
         <div className="w-full h-[400px] flex justify-center items-center">
-          <RingLoader color="#013ee6" />
+          <RingLoader color={loaderColor} />
         </div>
       )}
     </div>
