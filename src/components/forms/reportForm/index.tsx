@@ -120,6 +120,23 @@ export default function ReportGenerator() {
       return;
     }
 
+    const from = new Date(formState.dateRange.from);
+    const to = new Date(formState.dateRange.to);
+    const diffTime = Math.abs(to.getTime() - from.getTime());
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays >= 60) {
+      toast.info("Date range should not exceed 2 months", {
+        style: {
+          background: "blue",
+          color: "white",
+          border: "none",
+        },
+      });
+      setIsLoading(false);
+      return;
+    }
+
     const data = {
       grid_id: formState.location,
       start_time:
@@ -202,6 +219,7 @@ export default function ReportGenerator() {
                   name="title"
                   id="title"
                   type="text"
+                  className="dark:text-gray-500"
                   placeholder="Enter report title"
                   value={formState.title}
                   onChange={(e) => handleChange("title")(e.target.value)}
@@ -217,7 +235,7 @@ export default function ReportGenerator() {
                   }
                   value={formState.reportTemplate}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="dark:text-gray-500">
                     <SelectValue placeholder="Select report template" />
                   </SelectTrigger>
                   <SelectContent className="bg-white">
@@ -239,7 +257,7 @@ export default function ReportGenerator() {
                   onValueChange={(value) => handleChange("location")(value)}
                   value={formState.location}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="dark:text-gray-500">
                     <SelectValue placeholder="Select location" />
                   </SelectTrigger>
                   <SelectContent className="bg-white">
@@ -257,8 +275,9 @@ export default function ReportGenerator() {
               <div>
                 <Label htmlFor="date">Select date range</Label>
                 <DatePickerWithRange
-                  value={formState.dateRange} // Pass the selected date range as a prop
-                  onChange={(value: any) => handleChange("dateRange")(value)} // Update the selected date range when it changes
+                  className="dark:text-gray-500"
+                  value={formState.dateRange}
+                  onChange={(value: any) => handleChange("dateRange")(value)}
                 />
               </div>
 

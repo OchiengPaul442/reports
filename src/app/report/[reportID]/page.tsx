@@ -5,7 +5,6 @@ import { useAppSelector } from "@/lib/hooks";
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
@@ -16,6 +15,7 @@ import Template1 from "@/components/reportTemplates/template1";
 import { Parser } from "json2csv";
 import { ClipLoader } from "react-spinners";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 interface IReport {
@@ -76,9 +76,9 @@ export default function ReportPage({ params }: { params: IReport }) {
         <Breadcrumb className="w-full py-4 px-2 border border-gray-400 rounded-md">
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/report" className="text-blue-600">
+              <Link href="/report" className="text-blue-600">
                 Home
-              </BreadcrumbLink>
+              </Link>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>

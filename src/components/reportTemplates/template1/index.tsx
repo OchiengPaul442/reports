@@ -1,6 +1,6 @@
-"use client";
 /* eslint-disable jsx-a11y/alt-text */
-import React from "react";
+"use client";
+import React, { useMemo } from "react";
 import {
   Page,
   Text,
@@ -9,7 +9,6 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer";
-import { useAppSelector } from "@/lib/hooks";
 
 interface Template1Props {
   data: any;
@@ -30,64 +29,72 @@ const Header: React.FC = () => {
 };
 
 export default function Template1({ data }: Template1Props) {
-  const startDate = new Date(data?.period.startTime).toLocaleDateString(
-    "en-US",
-    {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    }
+  const startDate = useMemo(
+    () =>
+      new Date(data?.period.startTime).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      }),
+    [data?.period.startTime]
   );
 
-  const endDate = new Date(data?.period.endTime).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
+  const endDate = useMemo(
+    () =>
+      new Date(data?.period.endTime).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      }),
+    [data?.period.endTime]
+  );
 
-  const tableData1 = [
-    {
-      healthConcern: "Good",
-      pm25: "0 - 12",
-      precautions:
-        "None: Air quality is satisfactory; and air pollution poses little or no risk.",
-      bgColor: "#00e400",
-    },
-    {
-      healthConcern: "Moderate",
-      pm25: "12.1 - 35.4",
-      precautions:
-        "Unusually sensitive people should consider reducing prolonged or heavy exertion.",
-      bgColor: "#ff0",
-    },
-    {
-      healthConcern: "Unhealthy for Sensitive Groups",
-      pm25: "35.5 - 55.4",
-      precautions:
-        "Sensitive groups should reduce prolonged or heavy exertion.",
-      bgColor: "#f90",
-    },
-    {
-      healthConcern: "Unhealthy",
-      pm25: "55.5 - 150.4",
-      precautions:
-        "Everyone should reduce prolonged or heavy exertion, take more breaks during outdoor activities.",
-      bgColor: "#f00",
-    },
-    {
-      healthConcern: "Very Unhealthy",
-      pm25: "150.5 - 250.4",
-      precautions:
-        "Everyone should avoid prolonged or heavy exertion, move activities indoors or reschedule.",
-      bgColor: "#90f",
-    },
-    {
-      healthConcern: "Hazardous",
-      pm25: "250.5 - 500.4",
-      precautions: "Everyone should avoid all physical activities outdoors.",
-      bgColor: "#600",
-    },
-  ];
+  const tableData1 = useMemo(
+    () => [
+      {
+        healthConcern: "Good",
+        pm25: "0 - 12",
+        precautions:
+          "None: Air quality is satisfactory; and air pollution poses little or no risk.",
+        bgColor: "#00e400",
+      },
+      {
+        healthConcern: "Moderate",
+        pm25: "12.1 - 35.4",
+        precautions:
+          "Unusually sensitive people should consider reducing prolonged or heavy exertion.",
+        bgColor: "#ff0",
+      },
+      {
+        healthConcern: "Unhealthy for Sensitive Groups",
+        pm25: "35.5 - 55.4",
+        precautions:
+          "Sensitive groups should reduce prolonged or heavy exertion.",
+        bgColor: "#f90",
+      },
+      {
+        healthConcern: "Unhealthy",
+        pm25: "55.5 - 150.4",
+        precautions:
+          "Everyone should reduce prolonged or heavy exertion, take more breaks during outdoor activities.",
+        bgColor: "#f00",
+      },
+      {
+        healthConcern: "Very Unhealthy",
+        pm25: "150.5 - 250.4",
+        precautions:
+          "Everyone should avoid prolonged or heavy exertion, move activities indoors or reschedule.",
+        bgColor: "#90f",
+      },
+      {
+        healthConcern: "Hazardous",
+        pm25: "250.5 - 500.4",
+        precautions: "Everyone should avoid all physical activities outdoors.",
+        bgColor: "#600",
+      },
+    ],
+    []
+  );
 
   return (
     <Document

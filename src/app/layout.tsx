@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/services/themeProvider/ThemeProvider";
 import StoreProvider from "./StoreProvider";
 import SessionProviderWrapper from "@/services/sessionProvider";
 import { Toaster } from "@/components/ui/sonner";
+import LoginCheck from "../lib/loginCheck";
 
 // Set up the Inter font
 const inter = Inter({ subsets: ["latin"] });
@@ -34,7 +35,10 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <SessionProviderWrapper>{children}</SessionProviderWrapper>
+            <SessionProviderWrapper>
+              <LoginCheck />
+              <>{children}</>
+            </SessionProviderWrapper>
           </ThemeProvider>
           <Toaster />
         </StoreProvider>
