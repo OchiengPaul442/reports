@@ -1,3 +1,4 @@
+"use client";
 /* eslint-disable jsx-a11y/alt-text */
 import React from "react";
 import {
@@ -8,6 +9,7 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer";
+import { useAppSelector } from "@/lib/hooks";
 
 interface Template1Props {
   data: any;
@@ -28,7 +30,7 @@ const Header: React.FC = () => {
 };
 
 export default function Template1({ data }: Template1Props) {
-  const startDate = new Date(data.period.startTime).toLocaleDateString(
+  const startDate = new Date(data?.period.startTime).toLocaleDateString(
     "en-US",
     {
       month: "short",
@@ -37,7 +39,7 @@ export default function Template1({ data }: Template1Props) {
     }
   );
 
-  const endDate = new Date(data.period.endTime).toLocaleDateString("en-US", {
+  const endDate = new Date(data?.period.endTime).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",

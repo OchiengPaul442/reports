@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { useAppSelector } from "@/lib/hooks";
 import {
@@ -14,26 +14,28 @@ import { Button } from "@/components/ui/button";
 import { BlobProvider } from "@react-pdf/renderer";
 import Template1 from "@/components/reportTemplates/template1";
 import { Parser } from "json2csv";
-import { FadeLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
+import { useTheme } from "next-themes";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 interface IReport {
   reportID: string;
 }
 
+const formatDate = (dateString: string) => {
+  return new Date(dateString).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
+
 export default function ReportPage({ params }: { params: IReport }) {
   const reportData = useAppSelector((state) => state.report);
+  const { theme } = useTheme();
+  const loaderColor = theme === "dark" ? "#fff" : "#013ee6";
 
-  // Function to format date in American format with full month
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
-  const handleClick = async () => {
+  const handleClick = useCallback(async () => {
     try {
       const parser = new Parser();
       const csv = parser.parse(reportData?.reportData);
@@ -49,7 +51,16 @@ export default function ReportPage({ params }: { params: IReport }) {
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [reportData]);
+
+  const formattedStartDate = useMemo(
+    () => formatDate(reportData.startDate),
+    [reportData.startDate]
+  );
+  const formattedEndDate = useMemo(
+    () => formatDate(reportData.endDate),
+    [reportData.endDate]
+  );
 
   return (
     <MainLayout>
@@ -96,11 +107,11 @@ export default function ReportPage({ params }: { params: IReport }) {
           </div>
           <div className="flex">
             <span className="font-medium mr-2 w-[200px] text-xl">From:</span>
-            <span>{formatDate(reportData.startDate)}</span>
+            <span>{formattedStartDate}</span>
           </div>
           <div className="flex">
             <span className="font-medium mr-2 w-[200px] text-xl">To:</span>
-            <span>{formatDate(reportData.endDate)}</span>
+            <span>{formattedEndDate}</span>
           </div>
         </div>
         <div>
@@ -117,8 +128,10 @@ export default function ReportPage({ params }: { params: IReport }) {
 
               return loading ? (
                 <div className="flex items-center space-x-4">
-                  <FadeLoader color="#013ee6" className="w-1 h-8" />
-                  <p className="text-blue-600">Processing your report...</p>
+                  <ClipLoader color={loaderColor} size={14} />
+                  <p className="text-blue-600 dark:text-blue-400">
+                    Processing your report...
+                  </p>
                 </div>
               ) : (
                 <div className="space-x-3">

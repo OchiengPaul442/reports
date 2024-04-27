@@ -53,7 +53,7 @@ const Index: React.FC<FormComponentProps> = ({ children, btnText }) => {
   };
 
   return (
-    <Card className="bg-white dark:bg-[#1a202c] p-8 rounded-lg shadow-2xl w-full max-w-md">
+    <Card className="bg-white dark:bg-[#1a202c] border-none p-8 rounded-lg shadow-2xl w-full max-w-md">
       <CardContent>
         <div className="flex justify-center">
           <Image src={AirQoLogo} alt="AirQo" className="w-20 mb-5" />
