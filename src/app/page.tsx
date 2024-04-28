@@ -1,4 +1,4 @@
-import Login from "./login/page";
+import Report from "./report/page";
 export default function Home() {
-  return <Login />;
+  return <Report />;
 }

@@ -50,7 +50,10 @@ export function DatePickerWithRange({
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0 bg-white" align="start">
+        <PopoverContent
+          className="w-auto p-0 bg-white dark:bg-gray-800 dark:text-gray-400"
+          align="start"
+        >
           <Calendar
             initialFocus
             mode="range"
@@ -64,7 +67,7 @@ export function DatePickerWithRange({
             classNames={{
               day_selected: "text-white hover:bg-blue-400 hover:text-white",
               day_range_middle:
-                "bg-blue-200 rounded-none text-blue-600 hover:bg-blue-300",
+                "bg-blue-200 rounded-none text-gray-700 hover:bg-blue-300",
               day_range_end:
                 "bg-blue-600 rounded-l-none text-white hover:bg-blue-800 hover:text-white",
               day_range_start:

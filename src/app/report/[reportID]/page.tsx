@@ -135,17 +135,14 @@ export default function ReportPage({ params }: { params: IReport }) {
                 </div>
               ) : (
                 <div className="space-x-3">
-                  <Button className="bg-blue-600 text-white hover:bg-blue-700">
-                    <a
-                      href={url ? url : "#"}
-                      download={`${reportData.reportTitle.replace(
-                        / /g,
-                        ""
-                      )}.pdf`}
-                    >
+                  <a
+                    href={url ? url : "#"}
+                    download={`${reportData.reportTitle.replace(/ /g, "")}.pdf`}
+                  >
+                    <Button className="bg-blue-600 text-white hover:bg-blue-700">
                       Download Report
-                    </a>
-                  </Button>
+                    </Button>
+                  </a>
 
                   <Dialog>
                     <DialogTrigger className="bg-gray-300 rounded-md hover:bg-gray-400 text-gray-800 p-2">

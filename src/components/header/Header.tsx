@@ -42,7 +42,9 @@ export default function Header() {
 
   const handleLogout = () => {
     setLoading(true);
-    signOut().then(() => setLoading(false));
+    signOut({ callbackUrl: "/login" }).then(() => {
+      setLoading(false);
+    });
   };
 
   const isActive = (route: string) => {
@@ -123,7 +125,7 @@ export default function Header() {
         </div>
         <div className="flex items-center space-x-4">
           <AiOutlineBell
-            className="text-gray-600 text-2xl rounded-full bg-gray-200 p-2 disabled:opacity-50 cursor-not-allowed"
+            className="text-gray-600 text-2xl rounded-full bg-gray-200 p-2 disabled:opacity-50 cursor-not-allowed dark:bg-gray-700 dark:text-gray-300"
             size={34}
           />
           <div className="relative">
@@ -132,11 +134,11 @@ export default function Header() {
                 <div>
                   <BsPerson
                     size={34}
-                    className="text-gray-600 text-2xl cursor-pointer rounded-full bg-gray-200 p-2"
+                    className="text-gray-600 text-2xl cursor-pointer rounded-full bg-gray-200 p-2 dark:bg-gray-700 dark:text-gray-300"
                   />
                 </div>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="relative right-6 w-52 bg-white">
+              <DropdownMenuContent className="relative right-6 w-52 bg-white dark:bg-gray-800 dark:text-gray-300">
                 <DropdownMenuLabel>
                   {session?.user?.email && session?.user?.email.length > 30
                     ? session?.user?.email?.slice(0, 30) + "..."

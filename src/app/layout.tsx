@@ -38,8 +38,8 @@ export default function RootLayout({
               <>{children}</>
             </SessionProviderWrapper>
           </ThemeProvider>
-          <Toaster />
         </StoreProvider>
+        <Toaster />
       </body>
     </html>
   );

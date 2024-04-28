@@ -238,7 +238,7 @@ export default function ReportGenerator() {
                   <SelectTrigger className="dark:text-gray-500">
                     <SelectValue placeholder="Select report template" />
                   </SelectTrigger>
-                  <SelectContent className="bg-white">
+                  <SelectContent className="bg-white dark:bg-gray-800 dark:text-gray-400">
                     <SelectGroup>
                       {reportTypes.map((type) => (
                         <SelectItem key={type.value} value={type.value}>
@@ -260,7 +260,7 @@ export default function ReportGenerator() {
                   <SelectTrigger className="dark:text-gray-500">
                     <SelectValue placeholder="Select location" />
                   </SelectTrigger>
-                  <SelectContent className="bg-white">
+                  <SelectContent className="bg-white dark:bg-gray-800 dark:text-gray-400">
                     <SelectGroup>
                       {grids.map((type: { _id: string; long_name: string }) => (
                         <SelectItem key={type._id} value={type._id}>

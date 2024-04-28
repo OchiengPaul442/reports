@@ -9,7 +9,7 @@ interface Token {
 }
 
 export const config = {
-  matcher: ["/report", "/settings"],
+  matcher: ["/", "/settings", "/report/:path*", "/report"],
 };
 
 export async function middleware(req: NextRequest) {
@@ -33,9 +33,9 @@ export async function middleware(req: NextRequest) {
   }
 
   // Redirect them to login page if they are not authenticated
-  if (!token && pathname !== "/") {
+  if (!token && pathname !== "/login") {
     // Use an absolute URL for the redirect
-    return NextResponse.redirect(`${req.nextUrl.origin}`);
+    return NextResponse.redirect(`${req.nextUrl.origin}/login`);
   }
 
   // If none of the conditions are met, continue to the next middleware or route handler

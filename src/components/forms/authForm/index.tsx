@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import AirQoLogo from "@/public/images/airqo.png";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { ScaleLoader } from "react-spinners";
 
 interface FormComponentProps {
   children: ReactNode;
@@ -32,7 +33,9 @@ const Index: React.FC<FormComponentProps> = ({ children, btnText }) => {
       });
 
       if (result?.error) {
-        toast.error(result.error);
+        toast.error(result.error, {
+          style: { background: "red", color: "white", border: "none" },
+        });
       } else {
         toast.success("User authenticated successfully", {
           style: {
@@ -41,6 +44,11 @@ const Index: React.FC<FormComponentProps> = ({ children, btnText }) => {
             border: "none",
           },
         });
+
+        // set form data to null
+        formData.delete("email");
+        formData.delete("password");
+
         router.push("/report");
       }
     } catch (error) {
@@ -64,7 +72,7 @@ const Index: React.FC<FormComponentProps> = ({ children, btnText }) => {
             type="submit"
             className="w-full px-4 py-3 rounded-lg bg-blue-500 text-white shadow-lg hover:bg-blue-600 focus:outline-none"
           >
-            {loading ? "Loading..." : btnText}
+            {loading ? <ScaleLoader color="#fff" height={15} /> : btnText}
           </Button>
         </form>
         <CardFooter className="text-center mt-4">
