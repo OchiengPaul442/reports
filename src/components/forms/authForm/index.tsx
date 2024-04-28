@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import AirQoLogo from "@/public/images/airqo.png";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { ScaleLoader } from "react-spinners";
+import { redirect } from "next/navigation";
 
 interface FormComponentProps {
   children: ReactNode;
@@ -32,19 +33,16 @@ const Index: React.FC<FormComponentProps> = ({ children, btnText }) => {
         ...data,
       });
 
-      if (result?.error) {
-        toast.error(result.error, {
+      if (result?.status === 200) {
+        toast.success("User authenticated successfully", {
+          style: { background: "green", color: "white", border: "none" },
+        });
+        router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/report`);
+        return;
+      } else {
+        toast.error("Failed to log in, please try again", {
           style: { background: "red", color: "white", border: "none" },
         });
-      } else {
-        toast.success("User authenticated successfully", {
-          style: {
-            background: "green",
-            color: "white",
-            border: "none",
-          },
-        });
-        router.push("/report");
       }
     } catch (error) {
       toast.error("Failed to log in, please try again", {
