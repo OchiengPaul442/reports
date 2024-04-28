@@ -67,7 +67,7 @@ export function DatePickerWithRange({
             classNames={{
               day_selected: "text-white hover:bg-blue-400 hover:text-white",
               day_range_middle:
-                "bg-blue-200 rounded-none text-gray-700 hover:bg-blue-300",
+                "bg-blue-200 dark:bg-gray-700 rounded-none text-gray-400 hover:bg-blue-300",
               day_range_end:
                 "bg-blue-600 rounded-l-none text-white hover:bg-blue-800 hover:text-white",
               day_range_start:

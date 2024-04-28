@@ -40,7 +40,7 @@ const Index: React.FC<FormComponentProps> = ({ children, btnText }) => {
         router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/report`);
         return;
       } else {
-        toast.error("Failed to log in, please try again", {
+        toast.error(<div className="capitalize">{result?.error}</div>, {
           style: { background: "red", color: "white", border: "none" },
         });
       }
@@ -68,12 +68,12 @@ const Index: React.FC<FormComponentProps> = ({ children, btnText }) => {
             {loading ? <ScaleLoader color="#fff" height={15} /> : btnText}
           </Button>
         </form>
-        <CardFooter className="text-center mt-4">
+        {/* <CardFooter className="text-center mt-4">
           Forgot password?
           <Link href="/report">
             <span className="text-blue-500 ml-2">Reset here</span>
           </Link>
-        </CardFooter>
+        </CardFooter> */}
       </CardContent>
     </Card>
   );

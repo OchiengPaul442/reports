@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer";
+import { BarChart, LineChart } from "../graphs";
 
 interface Template1Props {
   data: any;
@@ -95,6 +96,20 @@ export default function Template1({ data }: Template1Props) {
     ],
     []
   );
+
+  // const chartData1 = {
+  //   labels: data.site_monthly_mean_pm.map(
+  //     (site_name: any) => site_name.site_name
+  //   ),
+  //   datasets: [
+  //     {
+  //       label: "PM2.5 Raw Values",
+  //       data: data.site_monthly_mean_pm.map(
+  //         (item: { pm2_5_raw_value: number }) => item.pm2_5_raw_value
+  //       ),
+  //     },
+  //   ],
+  // };
 
   return (
     <Document
@@ -213,6 +228,13 @@ export default function Template1({ data }: Template1Props) {
           </Text>
         </View>
         <View>
+          {/* <BarChart
+            chartData={chartData1}
+            graphTitle={`Site Monthly Mean PM2.5 for ${data.sites["grid name"]}`}
+            xAxisTitle="Locations"
+            yAxisTitle="PM2.5 Raw Values"
+          /> */}
+
           <Text
             style={{
               ...styles.figureCaption,
@@ -221,7 +243,7 @@ export default function Template1({ data }: Template1Props) {
             }}
           >
             Figure 1: Figure showing the monthly mean PM2.5 for different sites
-            in
+            in {data.sites["grid name"].join(", ")}
           </Text>
         </View>
         <Text style={styles.text}>

@@ -182,7 +182,7 @@ export default function ReportGenerator() {
       })
       .catch((error) => {
         setIsLoading(false);
-        toast.error("Error fetching report data", {
+        toast.error(error.response.data.message, {
           style: {
             background: "red",
             color: "white",

@@ -30,8 +30,8 @@ const handler = NextAuth({
           }
 
           throw new Error("User not found");
-        } catch (error) {
-          throw new Error("Failed to log in, please try again");
+        } catch (error: any) {
+          throw new Error(error.response.data.message);
         }
       },
     }),
