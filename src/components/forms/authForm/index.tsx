@@ -44,11 +44,6 @@ const Index: React.FC<FormComponentProps> = ({ children, btnText }) => {
             border: "none",
           },
         });
-
-        // set form data to null
-        formData.delete("email");
-        formData.delete("password");
-
         router.push("/report");
       }
     } catch (error) {
