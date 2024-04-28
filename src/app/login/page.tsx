@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import FormComponent from "@/components/forms/authForm";
 import { Input } from "@/components/ui/input";

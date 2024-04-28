@@ -8,7 +8,7 @@ import { ThemeProvider } from "@/services/themeProvider/ThemeProvider";
 import StoreProvider from "./StoreProvider";
 import SessionProviderWrapper from "@/services/sessionProvider";
 import { Toaster } from "@/components/ui/sonner";
-import LoginCheck from "../lib/loginCheck";
+import LoginCheck from "@/lib/loginCheck";
 
 // Set up the Inter font
 const inter = Inter({ subsets: ["latin"] });

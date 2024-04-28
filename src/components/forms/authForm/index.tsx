@@ -41,6 +41,7 @@ const Index: React.FC<FormComponentProps> = ({ children, btnText }) => {
             border: "none",
           },
         });
+        router.push("/report");
       }
     } catch (error) {
       toast.error("Failed to log in, please try again", {

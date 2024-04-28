@@ -33,9 +33,9 @@ export async function middleware(req: NextRequest) {
   }
 
   // Redirect them to login page if they are not authenticated
-  if (!token && pathname !== "/login") {
+  if (!token && pathname !== "/") {
     // Use an absolute URL for the redirect
-    return NextResponse.redirect(`${req.nextUrl.origin}/login`);
+    return NextResponse.redirect(`${req.nextUrl.origin}`);
   }
 
   // If none of the conditions are met, continue to the next middleware or route handler
