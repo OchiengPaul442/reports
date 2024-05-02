@@ -65,14 +65,14 @@ export default function ReportPage({ params }: { params: IReport }) {
   return (
     <MainLayout>
       <div className="space-y-5">
-        <div className="flex justify-end">
+        {/* <div className="flex justify-end">
           <Button
             className="bg-blue-600 text-white hover:bg-blue-700"
             onClick={handleClick}
           >
             Export Raw Data
           </Button>
-        </div>
+        </div> */}
         <Breadcrumb className="w-full py-4 px-2 border border-gray-400 rounded-md">
           <BreadcrumbList>
             <BreadcrumbItem>
