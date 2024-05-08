@@ -28,6 +28,14 @@ import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { RingLoader } from "react-spinners";
 import { v4 as uuidv4 } from "uuid";
+import { MdOutlineAppShortcut } from "react-icons/md";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { IoInformationCircleSharp } from "react-icons/io5";
 
 const reportTypes = [
   // { value: "airqo", label: "AirQo Template" },
@@ -42,14 +50,18 @@ export default function ReportGenerator() {
   const [grids, setGrids] = useState([]);
   const [loading, setLoading] = useState(false);
   const [islLoading, setIsLoading] = useState(false);
+  const [showShortCut, setShowShortCut] = useState(false);
+
+  // Get today's date and the date 7 days ago
+  const today = new Date();
+  const lastWeek = new Date();
+  lastWeek.setDate(today.getDate() - 7);
+
   const [formState, setFormState] = useState({
     title: "",
     reportTemplate: "",
     location: "",
-    dateRange: {
-      from: new Date(),
-      to: new Date(),
-    },
+    dateRange: { from: lastWeek, to: today },
   });
 
   const handleClearForm = () => {
@@ -57,10 +69,7 @@ export default function ReportGenerator() {
       title: "",
       reportTemplate: "",
       location: "",
-      dateRange: {
-        from: new Date(),
-        to: new Date(),
-      },
+      dateRange: { from: lastWeek, to: today },
     });
 
     toast.success("Form cleared successfully", {
@@ -273,12 +282,120 @@ export default function ReportGenerator() {
               </div>
 
               <div>
-                <Label htmlFor="date">Select date range</Label>
-                <DatePickerWithRange
-                  className="dark:text-gray-500"
-                  value={formState.dateRange}
-                  onChange={(value: any) => handleChange("dateRange")(value)}
-                />
+                <div className="flex items-center gap-2 mb-3">
+                  <Label htmlFor="date">Select date range</Label>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <IoInformationCircleSharp className="cursor-pointer" />
+                      </TooltipTrigger>
+                      <TooltipContent className="bg-white dark:bg-gray-800 dark:text-gray-400 p-2 rounded-md">
+                        <p>
+                          Select the date range you would like to generate the
+                          report for not exceeding 2 months.
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
+                {!showShortCut ? (
+                  <div className="flex flex-wrap gap-2 items-center">
+                    <DatePickerWithRange
+                      className="dark:text-gray-500"
+                      value={formState.dateRange}
+                      onChange={(value: any) =>
+                        handleChange("dateRange")(value)
+                      }
+                    />
+
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <Button
+                            type="button"
+                            className="bg-blue-700 hover:bg-blue-800 text-white p-2"
+                            onClick={() => setShowShortCut(true)}
+                          >
+                            <MdOutlineAppShortcut size={25} />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-white dark:bg-gray-800 dark:text-gray-400 p-2 rounded-md">
+                          <p>
+                            Click here to show shortcuts for date range
+                            selection.
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                ) : (
+                  <div className="flex flex-col">
+                    <div className="flex flex-wrap gap-2 items-center py-4">
+                      <span className="text-sm text-gray-500">
+                        <b>From:</b> {formState.dateRange.from.toDateString()}
+                      </span>
+                      <span className="text-sm text-gray-500">-</span>
+                      <span className="text-sm text-gray-500">
+                        <b>To:</b> {formState.dateRange.to.toDateString()}
+                      </span>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <Button
+                        type="button"
+                        className="bg-gray-300 hover:bg-gray-400 text-gray-800 p-2"
+                        onClick={() => setShowShortCut(false)}
+                      >
+                        Hide Shortcuts
+                      </Button>
+                      <Button
+                        type="button"
+                        className="bg-blue-700 hover:bg-blue-800 text-white p-2"
+                        onClick={() => {
+                          const today = new Date();
+                          const yesterday = new Date(today);
+                          yesterday.setDate(yesterday.getDate() - 1);
+                          handleChange("dateRange")({
+                            from: yesterday,
+                            to: today,
+                          });
+                        }}
+                      >
+                        Yesterday - Today
+                      </Button>
+                      <Button
+                        type="button"
+                        className="bg-blue-700 hover:bg-blue-800 text-white p-2"
+                        onClick={() => {
+                          const today = new Date();
+                          const lastWeek = new Date(today);
+                          lastWeek.setDate(lastWeek.getDate() - 7);
+                          handleChange("dateRange")({
+                            from: lastWeek,
+                            to: today,
+                          });
+                        }}
+                      >
+                        Last 7 days
+                      </Button>
+                      <Button
+                        type="button"
+                        className="bg-blue-700 hover:bg-blue-800 text-white p-2"
+                        onClick={() => {
+                          const today = new Date();
+                          const lastMonth = new Date(today);
+                          lastMonth.setMonth(lastMonth.getMonth() - 1);
+                          handleChange("dateRange")({
+                            from: lastMonth,
+                            to: today,
+                          });
+                        }}
+                      >
+                        Last 30 days
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="flex space-x-4 items-center">

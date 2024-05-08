@@ -111,6 +111,35 @@ export default function Template1({ data }: Template1Props) {
     ],
   };
 
+  const chartData2 = {
+    labels: data.daily_mean_pm.map((item: { date: string }) =>
+      new Date(item.date).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      })
+    ),
+    datasets: [
+      {
+        label: "Daily Mean PM2.5",
+        data: data.daily_mean_pm.map(
+          (item: { pm2_5_raw_value: number }) => item.pm2_5_raw_value
+        ),
+      },
+    ],
+  };
+
+  const chartData3 = {
+    labels: data.diurnal.map((item: { hour: number }) => item.hour),
+    datasets: [
+      {
+        label: "Diurnal PM2.5",
+        data: data.diurnal.map(
+          (item: { pm2_5_raw_value: number }) => item.pm2_5_raw_value
+        ),
+      },
+    ],
+  };
+
   return (
     <Document
       title="Air Quality Report"
@@ -136,12 +165,12 @@ export default function Template1({ data }: Template1Props) {
         </View>
         <Text style={styles.subTitle}>Executive Summary</Text>
         <Text style={styles.text}>
-          This report summarises the temporal air quality profiles observed by
+          This report summarizes the temporal air quality profiles observed by
           the AirQo monitors installed at {data.sites["grid name"].join(", ")}{" "}
           between {startDate} and {endDate}. The AirQo monitor measures
           particulate matter(PM2.5) concentration, one of the primary air
           pollutants. PM2.5 are fine inhalable particles with diameters
-          generally 2.5 micrometres and smaller. The data from the site
+          generally 2.5 micrometers and smaller. The data from the site
           indicates that the air quality at this location during the monitored
           period mainly alternated between moderate and unhealthy.
         </Text>
@@ -156,7 +185,7 @@ export default function Template1({ data }: Template1Props) {
           {"\n"} {"\n"}
           Among the various pollutants monitored, one key metric of interest is
           PM2.5. PM2.5 refers to particulate matter with a diameter of 2.5
-          micrometres or smaller. These microscopic particles, often generated
+          micrometers or smaller. These microscopic particles, often generated
           from various sources such as vehicle emissions, industrial processes,
           rubbish and biomass burning, construction activities, mining
           activities, dust from unpaved roads, etc, can pose significant health
@@ -171,16 +200,16 @@ export default function Template1({ data }: Template1Props) {
           from {startDate} and {endDate}. The focus of this investigation
           revolved around the values of PM2.5, a critical parameter in
           evaluating air quality. It aims to provide an insightful overview of
-          this locale&rsquo;s air quality conditions and neighbourhood.
+          this locale&rsquo;s air quality conditions and neighborhood.
         </Text>
         <View></View>
         <Text style={styles.subTitle}>Data Presentation</Text>
         <Text style={styles.text}>
-          Data for this report is presented and visualised using the US-EPA Air
+          Data for this report is presented and visualized using the US-EPA Air
           Quality Index (AQI) to communicate the health risks associated with
-          PM2.5 exposure. The data visualisation is based on a simplified
-          approach that adopts the raw concentration categorisation with the
-          corresponding AQI colour codes.
+          PM2.5 exposure. The data visualization is based on a simplified
+          approach that adopts the raw concentration categorization with the
+          corresponding AQI color codes.
         </Text>
         <View>
           <View style={styles.table}>
@@ -262,8 +291,15 @@ export default function Template1({ data }: Template1Props) {
           than 20 µg/m³ values in February as shown in figure 2:
         </Text>
         <View>
+          <BarChart
+            chartData={chartData2}
+            graphTitle={`Daily Mean PM2.5 for ${data.sites["grid name"]}`}
+            xAxisTitle="Date"
+            yAxisTitle="PM2.5 Raw Values"
+          />
           <Text style={styles.figureCaption}>
             Figure 2: Figure showing the daily mean PM2.5 for{" "}
+            {data.sites["grid name"]}
           </Text>
         </View>
         <Text style={styles.text}>
@@ -280,9 +316,15 @@ export default function Template1({ data }: Template1Props) {
         </Text>
         <View>
           <Text style={styles.subTitle}>Diurnal</Text>
-
+          <LineChart
+            chartData={chartData3}
+            graphTitle={`Diurnal PM2.5 for ${data.sites["grid name"]}`}
+            xAxisTitle="Hour"
+            yAxisTitle="PM2.5 Raw Values"
+          />
           <Text style={styles.figureCaption}>
-            Figure 3: Diurnal PM2.5 for . (The time was in GMT)
+            Figure 3: Diurnal PM2.5 for {data.sites["grid name"]}. (The time was
+            in GMT)
           </Text>
         </View>
         <Text style={styles.text}>
