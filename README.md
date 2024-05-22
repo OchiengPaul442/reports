@@ -1,17 +1,13 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+this is an application that used to generate air quality reports for different locations accoss Africa and to help people make better descisions and also protect there health and improving it by knowing the locations with bad airquality.
+
 ## Getting Started
 
 First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -34,3 +30,9 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## The Application is Powered by the AirQo API
+https://docs.airqo.net/airqo-rest-api-documentation
+
+## Image
+![image](https://github.com/OchiengPaul442/reports/assets/97807374/c0e90578-3dd0-4116-b633-368da8e9b246)
