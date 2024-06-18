@@ -51,6 +51,7 @@ export default function ReportGenerator() {
   const [loading, setLoading] = useState(false);
   const [islLoading, setIsLoading] = useState(false);
   const [showShortCut, setShowShortCut] = useState(false);
+  const [selectedButton, setSelectedButton] = useState("last-7-days");
 
   // Get today's date and the date 7 days ago
   const today = new Date();
@@ -81,7 +82,8 @@ export default function ReportGenerator() {
     });
   };
 
-  const handleChange = (name: string) => (value: any) => {
+  const handleChange = (name: string, buttonId: string) => (value: any) => {
+    setSelectedButton(buttonId);
     setFormState({
       ...formState,
       [name]: value,
@@ -201,6 +203,14 @@ export default function ReportGenerator() {
       });
   };
 
+  const getButtonClass = (buttonId: string) => {
+    return `${
+      selectedButton === buttonId ? "bg-green-700" : "bg-blue-700"
+    } hover:${
+      selectedButton === buttonId ? "bg-green-800" : "bg-blue-800"
+    } text-white p-2`;
+  };
+
   return (
     <div className="report-generator space-y-5">
       {loading ? (
@@ -231,7 +241,7 @@ export default function ReportGenerator() {
                   className="dark:text-gray-500"
                   placeholder="Enter report title"
                   value={formState.title}
-                  onChange={(e) => handleChange("title")(e.target.value)}
+                  onChange={(e) => handleChange("title", "")(e.target.value)}
                 />
               </div>
 
@@ -240,7 +250,7 @@ export default function ReportGenerator() {
                 <Select
                   name="reportTemplate"
                   onValueChange={(value) =>
-                    handleChange("reportTemplate")(value)
+                    handleChange("reportTemplate", "")(value)
                   }
                   value={formState.reportTemplate}
                 >
@@ -263,7 +273,7 @@ export default function ReportGenerator() {
                 <Label htmlFor="location">Select location</Label>
                 <Select
                   name="location"
-                  onValueChange={(value) => handleChange("location")(value)}
+                  onValueChange={(value) => handleChange("location", "")(value)}
                   value={formState.location}
                 >
                   <SelectTrigger className="dark:text-gray-500">
@@ -304,7 +314,7 @@ export default function ReportGenerator() {
                       className="dark:text-gray-500"
                       value={formState.dateRange}
                       onChange={(value: any) =>
-                        handleChange("dateRange")(value)
+                        handleChange("dateRange", "")(value)
                       }
                     />
 
@@ -350,12 +360,15 @@ export default function ReportGenerator() {
                       </Button>
                       <Button
                         type="button"
-                        className="bg-blue-700 hover:bg-blue-800 text-white p-2"
+                        className={getButtonClass("yesterday-today")}
                         onClick={() => {
                           const today = new Date();
                           const yesterday = new Date(today);
                           yesterday.setDate(yesterday.getDate() - 1);
-                          handleChange("dateRange")({
+                          handleChange(
+                            "dateRange",
+                            "yesterday-today"
+                          )({
                             from: yesterday,
                             to: today,
                           });
@@ -365,12 +378,15 @@ export default function ReportGenerator() {
                       </Button>
                       <Button
                         type="button"
-                        className="bg-blue-700 hover:bg-blue-800 text-white p-2"
+                        className={getButtonClass("last-7-days")}
                         onClick={() => {
                           const today = new Date();
                           const lastWeek = new Date(today);
                           lastWeek.setDate(lastWeek.getDate() - 7);
-                          handleChange("dateRange")({
+                          handleChange(
+                            "dateRange",
+                            "last-7-days"
+                          )({
                             from: lastWeek,
                             to: today,
                           });
@@ -380,12 +396,15 @@ export default function ReportGenerator() {
                       </Button>
                       <Button
                         type="button"
-                        className="bg-blue-700 hover:bg-blue-800 text-white p-2"
+                        className={getButtonClass("last-30-days")}
                         onClick={() => {
                           const today = new Date();
                           const lastMonth = new Date(today);
                           lastMonth.setMonth(lastMonth.getMonth() - 1);
-                          handleChange("dateRange")({
+                          handleChange(
+                            "dateRange",
+                            "last-30-days"
+                          )({
                             from: lastMonth,
                             to: today,
                           });
@@ -404,7 +423,7 @@ export default function ReportGenerator() {
                   className="p-2 bg-blue-700 hover:bg-blue-800 text-white"
                 >
                   <FaDownload className="mr-2 h-4 w-4" />
-                  Fetch Report Data
+                  Generate Report
                 </Button>
                 <Button
                   type="button"
