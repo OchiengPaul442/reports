@@ -45,6 +45,8 @@ export default function Header() {
     signOut({ callbackUrl: "/login" }).then(() => {
       setLoading(false);
     });
+    // clear all local storage data
+    localStorage.clear();
   };
 
   const isActive = (route: string) => {
@@ -124,10 +126,10 @@ export default function Header() {
           </Drawer>
         </div>
         <div className="flex items-center space-x-4">
-          <AiOutlineBell
+          {/* <AiOutlineBell
             className="text-gray-600 text-2xl rounded-full bg-gray-200 p-2 disabled:opacity-50 cursor-not-allowed dark:bg-gray-700 dark:text-gray-300"
             size={34}
-          />
+          /> */}
           <div className="relative">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
