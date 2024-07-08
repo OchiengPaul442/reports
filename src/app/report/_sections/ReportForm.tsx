@@ -171,13 +171,17 @@ const ReportForm = ({ grids }: any) => {
       router.push(`/report/${randomId}`);
     } catch (error: any) {
       setIsLoading(false);
-      toast.error(error.response.data.message, {
-        style: {
-          background: "red",
-          color: "white",
-          border: "none",
-        },
-      });
+      toast.error(
+        error?.response?.data.message ||
+          "Server timeout, please try again later",
+        {
+          style: {
+            background: "red",
+            color: "white",
+            border: "none",
+          },
+        }
+      );
     }
   };
 
@@ -251,11 +255,17 @@ const ReportForm = ({ grids }: any) => {
                 </SelectTrigger>
                 <SelectContent className="bg-white dark:bg-gray-800 dark:text-gray-400">
                   <SelectGroup>
-                    {grids.map((type: { _id: string; long_name: string }) => (
-                      <SelectItem key={type._id} value={type._id}>
-                        {type.long_name}
-                      </SelectItem>
-                    ))}
+                    {grids
+                      .filter((grid: any) =>
+                        ["city", "division", "Municipality", "county"].includes(
+                          grid.admin_level
+                        )
+                      )
+                      .map((type: { _id: string; long_name: string }) => (
+                        <SelectItem key={type._id} value={type._id}>
+                          {type.long_name}
+                        </SelectItem>
+                      ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>
