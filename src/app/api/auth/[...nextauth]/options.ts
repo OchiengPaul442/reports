@@ -30,7 +30,7 @@ export const options = {
 
           throw new Error("User not found");
         } catch (error: any) {
-          throw new Error(error.response.data.message);
+          throw new Error(error.response.data.message || error.message);
         }
       },
     }),

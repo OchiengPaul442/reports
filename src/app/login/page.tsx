@@ -14,12 +14,14 @@ const Page = () => {
           <Input
             type="email"
             name="email"
+            autoComplete="email"
             placeholder="Email Address"
             className="w-full px-4 py-3 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 dark:text-white font-medium"
           />
         </div>
         <div className="relative flex items-center">
           <Input
+            autoComplete="current-password"
             type={showPassword ? "text" : "password"}
             name="password"
             placeholder="Password"
