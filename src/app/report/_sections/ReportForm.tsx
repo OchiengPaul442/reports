@@ -93,7 +93,6 @@ const ReportForm = ({ grids }: any) => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
 
     const { title, reportTemplate, location, dateRange } = formState;
 
@@ -111,23 +110,23 @@ const ReportForm = ({ grids }: any) => {
           border: "none",
         },
       });
-      setIsLoading(false);
       return;
     }
 
     const diffDays = differenceInDays(dateRange.to, dateRange.from);
 
     if (diffDays > 120) {
-      toast.info("Date range should not exceed 3 months", {
+      toast.info("Date range should not exceed 120 days", {
         style: {
           background: "blue",
           color: "white",
           border: "none",
         },
       });
-      setIsLoading(false);
       return;
     }
+
+    setIsLoading(true);
 
     const data = {
       grid_id: location,
@@ -138,6 +137,7 @@ const ReportForm = ({ grids }: any) => {
 
     try {
       const response = await getReportData(data);
+
       dispatch(setStartDate(data.start_time));
       dispatch(setEndDate(data.end_time));
       dispatch(setReportTitle(title));
@@ -152,7 +152,6 @@ const ReportForm = ({ grids }: any) => {
         },
       });
 
-      // clear form
       setFormState({
         title: "",
         reportTemplate: "",
@@ -163,14 +162,12 @@ const ReportForm = ({ grids }: any) => {
         },
       });
 
-      // Generate a random ID of 16 characters without hyphens
       const uuid = uuidv4();
       const idWithoutHyphens = uuid.replace(/-/g, "");
       const randomId = idWithoutHyphens.substring(0, 16);
 
       router.push(`/report/${randomId}`);
     } catch (error: any) {
-      setIsLoading(false);
       toast.error(
         error?.response?.data.message ||
           "Server timeout, please try again later",
@@ -182,6 +179,8 @@ const ReportForm = ({ grids }: any) => {
           },
         }
       );
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -207,10 +206,10 @@ const ReportForm = ({ grids }: any) => {
           <h1 className="text-2xl font-semibold">Report Details</h1>
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <Label htmlFor="title">Enter report title</Label>
+              <Label htmlFor="Title">Enter report title</Label>
               <Input
                 name="title"
-                id="title"
+                id="Title"
                 type="text"
                 className="dark:text-gray-500"
                 placeholder="Enter report title"
@@ -220,7 +219,7 @@ const ReportForm = ({ grids }: any) => {
             </div>
 
             <div>
-              <Label htmlFor="reportTemplate">Select report template</Label>
+              <Label htmlFor="ReportTemplate">Select report template</Label>
               <Select
                 name="reportTemplate"
                 onValueChange={(value) =>
@@ -228,7 +227,10 @@ const ReportForm = ({ grids }: any) => {
                 }
                 value={formState.reportTemplate}
               >
-                <SelectTrigger className="dark:text-gray-500">
+                <SelectTrigger
+                  id="ReportTemplate"
+                  className="dark:text-gray-500"
+                >
                   <SelectValue placeholder="Select report template" />
                 </SelectTrigger>
                 <SelectContent className="bg-white dark:bg-gray-800 dark:text-gray-400">
@@ -244,13 +246,13 @@ const ReportForm = ({ grids }: any) => {
             </div>
 
             <div>
-              <Label htmlFor="location">Select location</Label>
+              <Label htmlFor="Locations">Select location</Label>
               <Select
                 name="location"
                 onValueChange={(value) => handleChange("location", "")(value)}
                 value={formState.location}
               >
-                <SelectTrigger className="dark:text-gray-500">
+                <SelectTrigger id="Locations" className="dark:text-gray-500">
                   <SelectValue placeholder="Select location" />
                 </SelectTrigger>
                 <SelectContent className="bg-white dark:bg-gray-800 dark:text-gray-400">
@@ -276,7 +278,7 @@ const ReportForm = ({ grids }: any) => {
                 <Label htmlFor="date">Select date range</Label>
                 <TooltipProvider>
                   <Tooltip>
-                    <TooltipTrigger>
+                    <TooltipTrigger id="date">
                       <IoInformationCircleSharp className="cursor-pointer" />
                     </TooltipTrigger>
                     <TooltipContent className="bg-white dark:bg-gray-800 dark:text-gray-400 p-2 rounded-md">
@@ -300,14 +302,12 @@ const ReportForm = ({ grids }: any) => {
 
                   <TooltipProvider>
                     <Tooltip>
-                      <TooltipTrigger>
-                        <Button
-                          type="button"
-                          className="bg-blue-700 hover:bg-blue-800 text-white p-2"
-                          onClick={() => setShowShortCut(true)}
-                        >
-                          <MdOutlineAppShortcut size={25} />
-                        </Button>
+                      <TooltipTrigger
+                        type="button"
+                        className="bg-blue-700 hover:bg-blue-800 rounded-md text-white p-2"
+                        onClick={() => setShowShortCut(true)}
+                      >
+                        <MdOutlineAppShortcut size={25} />
                       </TooltipTrigger>
                       <TooltipContent className="bg-white dark:bg-gray-800 dark:text-gray-400 p-2 rounded-md">
                         <p>

@@ -45,7 +45,9 @@ const SessionAndThemeProvider = ({
 
   return (
     <SessionProvider>
-      <NextThemesProvider {...props}>{children}</NextThemesProvider>
+      <>
+        <NextThemesProvider {...props}>{children}</NextThemesProvider>
+      </>
     </SessionProvider>
   );
 };

@@ -179,8 +179,6 @@ export default function Template1({ data }: Template1Props) {
     return monthNames[monthNumber - 1];
   };
 
-  console.log(data);
-
   return (
     <Document
       title="Air Quality Report"
