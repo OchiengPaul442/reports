@@ -192,8 +192,11 @@ const ReportForm = ({ grids }: any) => {
   return (
     <>
       {islLoading ? (
-        <div className="w-full h-[400px] flex justify-center items-center">
+        <div className="w-full h-[400px] flex flex-col justify-center text-center items-center">
           <RingLoader color={loaderColor} />
+          <p className="text-gray-500 pt-4 dark:text-gray-400">
+            Please wait, generating report...
+          </p>
         </div>
       ) : (
         <div className="space-y-5">
