@@ -148,6 +148,17 @@ export default function Template1({ data }: Template1Props) {
     .sort((a: any, b: any) => a.pm2_5_raw_value - b.pm2_5_raw_value)
     .slice(0, 3);
 
+  const highestPM25Hour = data.diurnal.reduce(
+    (max: any, item: any) =>
+      item.pm2_5_raw_value > max.pm2_5_raw_value ? item : max,
+    data.diurnal[0]
+  );
+  const lowestPM25Hour = data.diurnal.reduce(
+    (min: any, item: any) =>
+      item.pm2_5_raw_value < min.pm2_5_raw_value ? item : min,
+    data.diurnal[0]
+  );
+
   const getMonthName = (monthNumber: number) => {
     const monthNames = [
       "January",
@@ -331,7 +342,6 @@ export default function Template1({ data }: Template1Props) {
           {bottom3Locations[2].pm2_5_raw_value} µg/m³ in{" "}
           {getMonthName(bottom3Locations[2].month)}.
         </Text>
-
         <View>
           <BarChart
             chartData={chartData2}
@@ -358,16 +368,22 @@ export default function Template1({ data }: Template1Props) {
           </Text>
         </View>
         <Text style={styles.text}>
-          The hourly variation of PM2.5 concentrations, revealing insights into
-          air quality patterns. The highest PM2.5 value occurs at 21:00 (9:00
-          PM), while the lowest is at 16:00 (4:00 PM). Peak concentrations are
+          The hourly variation of PM2.5 concentrations reveals insights into air
+          quality patterns for {data.sites["grid name"][0]}. The highest PM2.5
+          value occurs at {highestPM25Hour.hour}:00, with a value of{" "}
+          {highestPM25Hour.pm2_5_raw_value} µg/m³, while the lowest is at{" "}
+          {lowestPM25Hour.hour}:00, with a value of{" "}
+          {lowestPM25Hour.pm2_5_raw_value} µg/m³. Peak concentrations are
           observed at night and in the morning, indicating potential
           contributing sources or activities. Daytime hours generally show lower
           PM2.5 levels, suggesting improved air quality during the day.
           {"\n"}
           {"\n"}
-          The PM2.5 value in uganda is higher than the WHO recommended standard
+          It{"'"}s important to note that the PM2.5 values in this dataset are
+          higher than the WHO recommended standard, indicating a need for
+          interventions to improve air quality.
         </Text>
+
         <Text
           style={styles.pageNumber}
           render={({ pageNumber, totalPages }) =>
@@ -376,20 +392,31 @@ export default function Template1({ data }: Template1Props) {
           fixed
         />
         <View>
-          <Text style={styles.subTitle}>Conclusion</Text>
+          <Text style={styles.subTitle}>Conclusion</Text>{" "}
           <Text style={styles.text}>
-            The data from the site indicates that the air quality at this
-            location during the monitored period mainly alternated between
-            moderate and unhealthy. During the end of 2023, the air quality was
-            largely moderate, and in January 2024, the air quality was largely
-            unhealthy. This calls for several interventions to be adopted in the
-            long run to ensure air quality remains at the recommended levels
-            that don{"'"}t pose a severe threat to the health of the residents
-            and visitors. Season variations might also have played a part in the
-            observed patterns (washout effect in the rainy season, i.e.,
-            September-November).
-            {"\n"}
-            {"\n"}
+            {" "}
+            The analysis of the data reveals that air quality varies
+            significantly over time, with periods of both moderate and unhealthy
+            conditions. It’s observed that these fluctuations may be influenced
+            by various factors, including seasonal changes. For instance, the
+            washout effect during the rainy season could potentially contribute
+            to these variations. Specifically, for the period from {
+              startDate
+            }{" "}
+            to {endDate}, the PM2.5 raw values ranged from{" "}
+            {data.monthly_pm[0].pm2_5_raw_value} µg/m³ to{" "}
+            {data.monthly_pm[1].pm2_5_raw_value} µg/m³ respectively.{"\n"}This
+            pattern underscores the importance of continuous monitoring and the
+            implementation of effective interventions to maintain air quality
+            within safe limits. Ensuring good air quality is crucial for the
+            well-being of both residents and visitors. Therefore, it’s
+            imperative to adopt long-term strategies and measures that can
+            effectively mitigate the impact of factors leading to poor air
+            quality.{"\n"}
+            {"\n"}In conclusion, continuous monitoring, timely intervention, and
+            effective policies are key to maintaining good air quality and
+            safeguarding public health. {"\n"}
+            {"\n"}{" "}
           </Text>
           <View>
             <Text style={styles.text}>
