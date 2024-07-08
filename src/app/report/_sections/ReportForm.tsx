@@ -167,7 +167,6 @@ const ReportForm = ({ grids }: any) => {
       const randomId = idWithoutHyphens.substring(0, 16);
 
       router.push(`/report/${randomId}`);
-      setIsLoading(false);
     } catch (error: any) {
       const errorMessage =
         error?.response?.data.message ||
@@ -180,6 +179,7 @@ const ReportForm = ({ grids }: any) => {
           border: "none",
         },
       });
+    } finally {
       setIsLoading(false);
     }
   };
