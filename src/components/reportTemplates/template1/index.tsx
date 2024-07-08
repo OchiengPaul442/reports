@@ -10,6 +10,7 @@ import {
   Image,
 } from "@react-pdf/renderer";
 import { BarChart, LineChart } from "../graphs";
+import { format } from "date-fns";
 
 interface Template1Props {
   data: any;
@@ -98,9 +99,10 @@ export default function Template1({ data }: Template1Props) {
   );
 
   const chartData1 = {
-    labels: data.site_monthly_mean_pm.map(
-      (site_name: any) => site_name.site_name
-    ),
+    labels: data.site_monthly_mean_pm.map((site_name: any) => {
+      const monthName = format(new Date(2024, site_name.month - 1), "MMM");
+      return `${site_name.site_name} (${monthName})`;
+    }),
     datasets: [
       {
         label: "PM2.5 Raw Values",
@@ -144,7 +146,7 @@ export default function Template1({ data }: Template1Props) {
     .sort((a: any, b: any) => b.pm2_5_raw_value - a.pm2_5_raw_value)
     .slice(0, 5);
 
-  const bottom3Locations = data.site_monthly_mean_pm
+  const bottom3Locations = [...data.site_monthly_mean_pm]
     .sort((a: any, b: any) => a.pm2_5_raw_value - b.pm2_5_raw_value)
     .slice(0, 3);
 
@@ -176,6 +178,8 @@ export default function Template1({ data }: Template1Props) {
     ];
     return monthNames[monthNumber - 1];
   };
+
+  console.log(data);
 
   return (
     <Document
