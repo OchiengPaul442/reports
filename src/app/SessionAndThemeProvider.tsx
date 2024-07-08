@@ -13,7 +13,9 @@ const SessionAndThemeProvider = ({
   children: React.ReactNode;
 } & ThemeProviderProps) => {
   const { theme } = useTheme();
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [isOnline, setIsOnline] = useState(
+    typeof window !== "undefined" ? navigator.onLine : true
+  );
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -21,16 +23,18 @@ const SessionAndThemeProvider = ({
   }, [theme]);
 
   useEffect(() => {
-    const goOnline = () => setIsOnline(true);
-    const goOffline = () => setIsOnline(false);
+    if (typeof window !== "undefined") {
+      const goOnline = () => setIsOnline(true);
+      const goOffline = () => setIsOnline(false);
 
-    window.addEventListener("online", goOnline);
-    window.addEventListener("offline", goOffline);
+      window.addEventListener("online", goOnline);
+      window.addEventListener("offline", goOffline);
 
-    return () => {
-      window.removeEventListener("online", goOnline);
-      window.removeEventListener("offline", goOffline);
-    };
+      return () => {
+        window.removeEventListener("online", goOnline);
+        window.removeEventListener("offline", goOffline);
+      };
+    }
   }, []);
 
   useEffect(() => {
