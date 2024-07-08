@@ -167,6 +167,7 @@ const ReportForm = ({ grids }: any) => {
       const randomId = idWithoutHyphens.substring(0, 16);
 
       router.push(`/report/${randomId}`);
+      setIsLoading(false);
     } catch (error: any) {
       const errorMessage =
         error?.response?.data.message ||
@@ -179,7 +180,6 @@ const ReportForm = ({ grids }: any) => {
           border: "none",
         },
       });
-    } finally {
       setIsLoading(false);
     }
   };
@@ -278,7 +278,7 @@ const ReportForm = ({ grids }: any) => {
                 <Label htmlFor="date">Select date range</Label>
                 <TooltipProvider>
                   <Tooltip>
-                    <TooltipTrigger id="date">
+                    <TooltipTrigger id="date" type="button">
                       <IoInformationCircleSharp className="cursor-pointer" />
                     </TooltipTrigger>
                     <TooltipContent className="bg-white dark:bg-gray-800 dark:text-gray-400 p-2 rounded-md">
@@ -299,7 +299,6 @@ const ReportForm = ({ grids }: any) => {
                       handleChange("dateRange", "")(value)
                     }
                   />
-
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger
