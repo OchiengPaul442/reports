@@ -258,10 +258,9 @@ const ReportForm = ({ grids }: any) => {
                 <SelectContent className="bg-white dark:bg-gray-800 dark:text-gray-400">
                   <SelectGroup>
                     {grids
-                      .filter((grid: any) =>
-                        ["city", "division", "Municipality", "county"].includes(
-                          grid.admin_level
-                        )
+                      .filter(
+                        (grid: any) =>
+                          !["country", "region"].includes(grid.admin_level)
                       )
                       .map((type: { _id: string; long_name: string }) => (
                         <SelectItem key={type._id} value={type._id}>
