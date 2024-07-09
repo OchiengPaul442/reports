@@ -140,21 +140,17 @@ export default function Header() {
           </Drawer>
         </div>
         <div className="flex items-center space-x-4">
-          {/* <AiOutlineBell
-            className="text-gray-600 text-2xl rounded-full bg-gray-200 p-2 disabled:opacity-50 cursor-not-allowed dark:bg-gray-700 dark:text-gray-300"
-            size={34}
-          /> */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <div className="cursor-pointer rounded-full p-2 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300">
                 <BsGrid3X3GapFill size={20} />
               </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="flex flex-row max-w-[180px] flex-wrap justify-center items-center gap-4 mr-5 p-3 bg-gray-800">
+            <DropdownMenuContent className="flex flex-row max-w-[180px] flex-wrap justify-center items-center gap-4 mr-5 p-3 bg-white dark:bg-gray-800 dark:text-gray-300">
               {Products.map((item, index) => (
                 <DropdownMenuCheckboxItem
                   key={index}
-                  className="flex flex-col bg-[#1d4ed8] hover:bg-[#1d4ed8] p-1 text-white items-center rounded-md cursor-pointer"
+                  className="flex flex-col bg-[#1d4ed8] hover:bg-blue-900 p-1 items-center rounded-md cursor-pointer"
                   onClick={() => {
                     window.open(item.href, "_blank");
                   }}
@@ -168,7 +164,7 @@ export default function Header() {
                     placeholder="blur"
                     blurDataURL="data:image/svg+xml;base64,..."
                   />
-                  <span className="text-[10px]">{item.name}</span>
+                  <span className="text-[10px] text-white">{item.name}</span>
                 </DropdownMenuCheckboxItem>
               ))}
             </DropdownMenuContent>
@@ -183,7 +179,7 @@ export default function Header() {
                   />
                 </div>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="relative right-6 w-52 bg-gray-800 text-white dark:text-gray-300">
+              <DropdownMenuContent className="relative right-6 w-52 bg-white dark:bg-gray-800 dark:text-gray-300">
                 <DropdownMenuLabel>
                   {session?.user?.email && session?.user?.email.length > 30
                     ? session?.user?.email?.slice(0, 30) + "..."
