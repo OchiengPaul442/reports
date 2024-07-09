@@ -161,6 +161,7 @@ export default function Template1({ data }: Template1Props) {
     data.diurnal[0]
   );
 
+  // Gets name of the month from the month number
   const getMonthName = (monthNumber: number) => {
     const monthNames = [
       "January",
