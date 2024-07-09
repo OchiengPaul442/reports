@@ -15,30 +15,22 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
+          # Remove the 'files' line to exclude files from the release
+          # files: # Specify the files you want to include in the release
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
 
-      - name: Generate release notes
-        id: release_notes
-        uses: github/release-notes@v0.3.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag: ${{ github.ref }}
-
       - name: Update Release
         id: update_release
         uses: actions/github-script@v5
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { owner, repo } = context.repo
-            const release_id = ${{ steps.create_release.outputs.id }}
-            const body = ${{ steps.release_notes.outputs.body }}
-            await github.rest.repos.updateRelease({ owner, repo, release_id, body })
+            const { owner, repo } = context.repo;
+            const release_id = ${{ steps.create_release.outputs.id }};
+            const body = ${{ steps.create_release.outputs.body }};
+            await github.rest.repos.updateRelease({ owner, repo, release_id, body });
