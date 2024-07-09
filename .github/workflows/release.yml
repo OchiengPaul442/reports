@@ -13,14 +13,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16" # Use Node.js 16
+
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          # Remove the 'files' line to exclude files from the release
-          # files: # Specify the files you want to include in the release
+          # Specify other parameters as needed
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
 
