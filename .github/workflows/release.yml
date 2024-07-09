@@ -1,8 +1,6 @@
 name: Release
 on:
-  pull_request:
-    types:
-      - closed
+  push:
     branches:
       - master
 
@@ -13,27 +11,40 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "16" # Use Node.js 16
-
       - name: Create Release
         id: create_release
-        uses: softprops/action-gh-release@v1
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          # Specify other parameters as needed
           tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
 
-      - name: Update Release
-        id: update_release
-        uses: actions/github-script@v5
+      - name: Generate release notes
+        id: release_notes
+        uses: actions/github-script@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { owner, repo } = context.repo;
-            const release_id = ${{ steps.create_release.outputs.id }};
-            const body = ${{ steps.create_release.outputs.body }};
-            await github.rest.repos.updateRelease({ owner, repo, release_id, body });
+            const { data: commits } = await github.repos.listCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha
+            });
+            return commits.map(commit => `- ${commit.commit.message}`).join('\n')
+
+      - name: Update Release
+        id: update_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: ${{ steps.release_notes.outputs.result }}
+          draft: false
+          prerelease: false
