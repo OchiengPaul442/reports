@@ -29,6 +29,7 @@ import Link from "next/link";
 import { TbSettingsCog } from "react-icons/tb";
 import { RiAiGenerate } from "react-icons/ri";
 import { SiFiles } from "react-icons/si";
+import { PulseLoader } from "react-spinners";
 import { BsGrid3X3GapFill } from "react-icons/bs";
 import AirQoLogo from "@/public/images/airqo.png";
 import { Separator } from "@/components/ui/separator";
@@ -149,7 +150,7 @@ export default function Header() {
                 <BsGrid3X3GapFill size={20} />
               </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="flex flex-row max-w-[180px] flex-wrap justify-center items-center gap-4 mr-5 p-3 bg-white">
+            <DropdownMenuContent className="flex flex-row max-w-[180px] flex-wrap justify-center items-center gap-4 mr-5 p-3 bg-gray-800">
               {Products.map((item, index) => (
                 <DropdownMenuCheckboxItem
                   key={index}
@@ -164,6 +165,8 @@ export default function Header() {
                     width={35}
                     height={35}
                     loading="lazy"
+                    placeholder="blur"
+                    blurDataURL="data:image/svg+xml;base64,..."
                   />
                   <span className="text-[10px]">{item.name}</span>
                 </DropdownMenuCheckboxItem>
@@ -180,7 +183,7 @@ export default function Header() {
                   />
                 </div>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="relative right-6 w-52 bg-white dark:bg-gray-800 dark:text-gray-300">
+              <DropdownMenuContent className="relative right-6 w-52 bg-gray-800 text-white dark:text-gray-300">
                 <DropdownMenuLabel>
                   {session?.user?.email && session?.user?.email.length > 30
                     ? session?.user?.email?.slice(0, 30) + "..."
