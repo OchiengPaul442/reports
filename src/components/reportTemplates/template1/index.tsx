@@ -325,6 +325,7 @@ export default function Template1({ data }: Template1Props) {
             </React.Fragment>
           ))}
         </Text>
+
         <Text style={styles.text}>
           In contrast to the locations with the highest PM2.5 values, there are
           several locations that stand out for their notably low PM2.5 values.
