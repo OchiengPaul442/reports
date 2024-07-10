@@ -56,22 +56,9 @@ jobs:
               }             
             });
 
-            const releaseNotes = `
-              **Bugs:**
-              ${categorizedNotes.bug.join('\n') || 'No bug fixes in this release.'}
-
-              **Documentation:**
-              ${categorizedNotes.documentation.join('\n') || 'No documentation updates in this release.'}
-
-              **Maintenance:**
-              ${categorizedNotes.maintenance.join('\n') || 'No maintenance tasks in this release.'}
-
-              **Features:**
-              ${categorizedNotes.feature.join('\n') || 'No new features in this release.'}
-
-              **Others:**
-              ${categorizedNotes.others.join('\n') || 'No other pull requests in this release.'}
-            `;
+            const releaseNotes = Object.entries(categorizedNotes).map(([category, notes]) => {
+              return `## ${category.charAt(0).toUpperCase() + category.slice(1)}\n${notes.join('\n') || 'No items in this category.'}`;
+            }).join('\n\n');
 
             return releaseNotes;
 
