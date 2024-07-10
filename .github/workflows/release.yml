@@ -11,7 +11,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Add a step to create a valid tag (replace with your desired tag name)
       - name: Create a valid tag
         run: |
           git tag v1.0.${GITHUB_RUN_NUMBER}
