@@ -44,6 +44,7 @@ jobs:
 
             const categorizedNotes = {
               bug: [],
+              documentation: [],
               maintenance: [],
               feature: [],
               others: []
@@ -55,18 +56,23 @@ jobs:
 
               if (labels.includes('bug')) {
                 categorizedNotes.bug.push(note);
+              } else if (labels.includes('documentation')) {
+                categorizedNotes.documentation.push(note);
               } else if (labels.includes('maintenance')) {
                 categorizedNotes.maintenance.push(note);
               } else if (labels.includes('feature')) {
                 categorizedNotes.feature.push(note);
               } else {
                 categorizedNotes.others.push(note);
-              }
+              }             
             });
 
             const releaseNotes = `
               **Bugs:**
               ${categorizedNotes.bug.join('\n') || 'No bug fixes in this release.'}
+
+              **Documentation:**
+              ${categorizedNotes.documentation.join('\n') || 'No documentation updates in this release.'}
 
               **Maintenance:**
               ${categorizedNotes.maintenance.join('\n') || 'No maintenance tasks in this release.'}
