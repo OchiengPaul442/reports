@@ -57,10 +57,12 @@ jobs:
             });
 
             const releaseNotes = Object.entries(categorizedNotes).map(([category, notes]) => {
-              return `## ${category.charAt(0).toUpperCase() + category.slice(1)}\n${notes.join('\n') || 'No items in this category.'}`;
-            }).join('\n\n');
+              return `## ${category.charAt(0).toUpperCase() + category.slice(1)}
 
-            return releaseNotes;
+            ${notes.join('\n\n') || 'No items in this category.'}`;
+              }).join('\n\n');
+
+              return releaseNotes;
 
       - name: Create Release
         id: create_release
