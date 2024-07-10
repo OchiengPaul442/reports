@@ -11,6 +11,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Add a step to create a valid tag (replace with your desired tag name)
       - name: Create a valid tag
         run: |
           git tag v1.0.${GITHUB_RUN_NUMBER}
@@ -35,12 +36,44 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { data: commits } = await github.repos.listCommits({
+            const { data: pulls } = await github.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              sha: context.sha
+              state: 'closed',
+              base: context.ref
             });
-            return commits.map(commit => `- ${commit.commit.message}`).join('\n')
+
+            const categorizedNotes = {
+              bug: [],
+              maintenance: [],
+              feature: []
+            };
+
+            pulls.forEach(pull => {
+              const labels = pull.labels.map(label => label.name.toLowerCase());
+              const note = `- ${pull.title} (#${pull.number})`;
+
+              if (labels.includes('bug')) {
+                categorizedNotes.bug.push(note);
+              } else if (labels.includes('maintenance')) {
+                categorizedNotes.maintenance.push(note);
+              } else if (labels.includes('feature')) {
+                categorizedNotes.feature.push(note);
+              }
+            });
+
+            const releaseNotes = `
+              **Bugs:**
+              ${categorizedNotes.bug.join('\n')}
+
+              **Maintenance:**
+              ${categorizedNotes.maintenance.join('\n')}
+
+              **Features:**
+              ${categorizedNotes.feature.join('\n')}
+            `;
+
+            return releaseNotes;
 
       # - name: Update Release
       #   id: update_release
