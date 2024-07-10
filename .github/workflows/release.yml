@@ -11,6 +11,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Create a valid tag
+        run: |
+          git tag v1.0.0
+          git push --tags
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
