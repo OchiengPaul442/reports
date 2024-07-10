@@ -25,7 +25,7 @@ jobs:
           tag_name: v1.0.${{ github.run_number }}
           release_name: Release v1.0.${{ github.run_number }}
           draft: false
-          prerelease: false
+          prerelease: true
 
       - name: Generate release notes
         id: release_notes
@@ -85,4 +85,3 @@ jobs:
             `;
 
             return releaseNotes;
-            console.log(releaseNotes);
