@@ -11,7 +11,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Add a step to create a valid tag (replace with your desired tag name)
       - name: Create a valid tag
         run: |
           git tag v1.0.${GITHUB_RUN_NUMBER}
@@ -46,7 +45,8 @@ jobs:
             const categorizedNotes = {
               bug: [],
               maintenance: [],
-              feature: []
+              feature: [],
+              others: []
             };
 
             pulls.forEach(pull => {
@@ -59,30 +59,23 @@ jobs:
                 categorizedNotes.maintenance.push(note);
               } else if (labels.includes('feature')) {
                 categorizedNotes.feature.push(note);
+              } else {
+                categorizedNotes.others.push(note);
               }
             });
 
             const releaseNotes = `
               **Bugs:**
-              ${categorizedNotes.bug.join('\n')}
+              ${categorizedNotes.bug.join('\n') || 'No bug fixes in this release.'}
 
               **Maintenance:**
-              ${categorizedNotes.maintenance.join('\n')}
+              ${categorizedNotes.maintenance.join('\n') || 'No maintenance tasks in this release.'}
 
               **Features:**
-              ${categorizedNotes.feature.join('\n')}
+              ${categorizedNotes.feature.join('\n') || 'No new features in this release.'}
+
+              **Others:**
+              ${categorizedNotes.others.join('\n') || 'No other pull requests in this release.'}
             `;
 
             return releaseNotes;
-
-      # - name: Update Release
-      #   id: update_release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag_name: v1.0.${{ github.run_number }}
-      #     release_name: Release v${{ github.run_number }}
-      #     body: ${{ steps.release_notes.outputs.result }}
-      #     draft: false
-      #     prerelease: false
