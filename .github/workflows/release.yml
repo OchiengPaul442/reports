@@ -16,14 +16,16 @@ jobs:
           git tag v1.0.${GITHUB_RUN_NUMBER}
           git push --tags
 
-      - name: Create Github Release
+      - name: Create Release
         id: create_release
-        uses: ncipollo/release-action@v1
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          artifacts: "build/windows/runner/Release/AppName-${{github.ref_name}}-windows.zip"
-          replacesArtifacts: false
-          token: ${{ secrets.GITHUB_TOKEN }}
-          allowUpdates: true
+          tag_name: v1.0.${{ github.run_number }}
+          release_name: Release v1.0.${{ github.run_number }}
+          draft: false
+          prerelease: false
 
       - name: Generate release notes
         id: release_notes
