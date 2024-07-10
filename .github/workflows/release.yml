@@ -16,17 +16,6 @@ jobs:
           git tag v1.0.${GITHUB_RUN_NUMBER}
           git push --tags
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v1.0.${{ github.run_number }}
-          release_name: Release v1.0.${{ github.run_number }}
-          draft: false
-          prerelease: true
-
       - name: Generate release notes
         id: release_notes
         uses: actions/github-script@v3
@@ -85,3 +74,15 @@ jobs:
             `;
 
             return releaseNotes;
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          release_name: Release v1.0.${{ github.run_number }}
+          draft: false
+          prerelease: true
+          body: ${{ steps.release_notes.outputs.result }}
