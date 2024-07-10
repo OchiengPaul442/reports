@@ -11,6 +11,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Create a valid tag
+        run: |
+          git tag v${{ github.run_number }} 
+          git push --tags
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -44,7 +49,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v${{ github.run_number }}
-          release_name: Release ${{ github.ref }}
+          release_name: Release v${{ github.run_number }}
           body: ${{ steps.release_notes.outputs.result }}
           draft: false
           prerelease: false
