@@ -10,6 +10,6 @@ jobs:
   update_release_draft:
     runs-on: ubuntu-latest
     steps:
-      - uses: OchiengPaul442/release-drafter@v6
+      - uses: OchiengPaul442/release-drafter@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
