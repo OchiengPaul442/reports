@@ -142,6 +142,7 @@ export default function Template1({ data }: Template1Props) {
     ],
   };
 
+  // Get top 5 and bottom 3 locations
   const top5Locations = [...data.site_monthly_mean_pm]
     .sort((a: any, b: any) => b.pm2_5_raw_value - a.pm2_5_raw_value)
     .slice(0, 5);
