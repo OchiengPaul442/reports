@@ -142,7 +142,6 @@ export default function Template1({ data }: Template1Props) {
     ],
   };
 
-  // Get top 5 and bottom 3 locations
   const top5Locations = [...data.site_monthly_mean_pm]
     .sort((a: any, b: any) => b.pm2_5_raw_value - a.pm2_5_raw_value)
     .slice(0, 5);
@@ -162,7 +161,6 @@ export default function Template1({ data }: Template1Props) {
     data.diurnal[0]
   );
 
-  // Gets name of the month from the month number
   const getMonthName = (monthNumber: number) => {
     const monthNames = [
       "January",
