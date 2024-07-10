@@ -18,7 +18,7 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -64,7 +64,7 @@ jobs:
                 categorizedNotes.feature.push(note);
               } else {
                 categorizedNotes.others.push(note);
-              }
+              }             
             });
 
             const releaseNotes = `
@@ -84,10 +84,5 @@ jobs:
               ${categorizedNotes.others.join('\n') || 'No other pull requests in this release.'}
             `;
 
-            // Update the release with the generated release notes
-            await github.repos.updateRelease({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              release_id: context.release.id,
-              body: releaseNotes
-            });
+            return releaseNotes;
+            console.log(releaseNotes);
