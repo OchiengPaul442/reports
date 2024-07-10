@@ -18,14 +18,15 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: actions/create-release@latest
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v1.0.${{ github.run_number }}
-          release_name: Release v1.0.${{ github.run_number }}
+          name: Release v1.0.${{ github.run_number }}
           draft: false
           prerelease: false
+          body_path: release_notes.md
 
       - name: Generate release notes
         id: release_notes
@@ -64,7 +65,7 @@ jobs:
                 categorizedNotes.feature.push(note);
               } else {
                 categorizedNotes.others.push(note);
-              }             
+              }
             });
 
             const releaseNotes = `
@@ -84,4 +85,6 @@ jobs:
               ${categorizedNotes.others.join('\n') || 'No other pull requests in this release.'}
             `;
 
-            return releaseNotes;
+            core.setOutput('release_notes', releaseNotes);
+            const fs = require('fs');
+            fs.writeFileSync('release_notes.md', releaseNotes);
