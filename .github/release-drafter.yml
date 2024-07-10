@@ -11,7 +11,7 @@ categories:
     label: "documentation"
   - title: "🔍 Others"
     label: "others"
-change-template: "- $TITLE (#$NUMBER)"
+change-template: "- $TITLE by @$AUTHOR (#$NUMBER)"
 version-resolver:
   major:
     labels:
@@ -27,6 +27,6 @@ autolabeler:
     files:
       - "*.md"
 template: |
-  ## What’s Changed Changes
+  ## What’s Changed
 
   $CHANGES
