@@ -62,7 +62,7 @@ jobs:
             ${notes.join('\n\n') || 'No items in this category.'}`;
               }).join('\n\n');
 
-              return releaseNotes;
+              return JSON.stringify(releaseNotes, null, 2);
 
       - name: Create Release
         id: create_release
