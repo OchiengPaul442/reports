@@ -62,7 +62,7 @@ jobs:
             ${notes.join('\n\n') || 'No items in this category.'}`;
               }).join('\n\n');
 
-              return JSON.stringify(releaseNotes, null, 2);
+              return releaseNotes;
 
       - name: Create Release
         id: create_release
@@ -74,4 +74,4 @@ jobs:
           release_name: Release v1.0.${{ github.run_number }}
           draft: false
           prerelease: true
-          body: ${{ steps.release_notes.outputs.result }}
+          body: ${{ replace(steps.release_notes.outputs.result, '\"', '') }}
