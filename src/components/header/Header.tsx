@@ -56,7 +56,7 @@ export default function Header() {
 
   const handleLogout = () => {
     setLoading(true);
-    signOut({ callbackUrl: "/login" }).then(() => {
+    signOut({ callbackUrl: "/reports/login" }).then(() => {
       setLoading(false);
     });
     // clear all local storage data
@@ -69,9 +69,9 @@ export default function Header() {
 
   const links = [
     {
-      href: "/report",
+      href: "/home",
       icon: RiAiGenerate,
-      label: "Report",
+      label: "Home",
     },
     // { href: "/files", icon: SiFiles, label: "Saved Files" },
     { href: "/settings", icon: TbSettingsCog, label: "Settings" },

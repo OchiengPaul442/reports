@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
-import jwt from "jsonwebtoken";
 
 // Define an interface for the token
 interface Token {
@@ -9,7 +8,7 @@ interface Token {
 }
 
 export const config = {
-  matcher: ["/", "/settings", "/report/:path*", "/report"],
+  matcher: ["/", "/settings", "/home/:path*", "/home"],
 };
 
 export async function middleware(req: NextRequest) {
@@ -19,12 +18,6 @@ export async function middleware(req: NextRequest) {
     secret: process.env.NEXT_AUTH_SECRET,
   })) as Token;
 
-  // Remove "JWT " from the start of the access token
-  const accessToken = token?.accessToken.replace("JWT ", "");
-
-  // Decode the access token
-  const decodedToken = jwt.decode(accessToken);
-
   const { pathname } = req.nextUrl;
 
   // Allow access to the API authentication routes or if the user is authenticated
@@ -33,9 +26,9 @@ export async function middleware(req: NextRequest) {
   }
 
   // Redirect them to login page if they are not authenticated
-  if (!token && pathname !== "/login") {
+  if (!token && pathname !== "/reports/login") {
     // Use an absolute URL for the redirect
-    return NextResponse.redirect(`${req.nextUrl.origin}/login`);
+    return NextResponse.redirect(`${req.nextUrl.origin}/reports/login`);
   }
 
   // If none of the conditions are met, continue to the next middleware or route handler
