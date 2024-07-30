@@ -1,31 +1,31 @@
-name-template: "Release v$NEXT_PATCH_VERSION 🌈"
-tag-template: "v$NEXT_PATCH_VERSION"
+name-template: 'Release v$NEXT_PATCH_VERSION 🌈'
+tag-template: 'v$NEXT_PATCH_VERSION'
 categories:
-  - title: "🚀 Features"
-    label: "feature"
-  - title: "🐛 Bug Fixes"
-    label: "bug"
-  - title: "🧰 Maintenance"
-    label: "maintenance"
-  - title: "📚 Documentation"
-    label: "documentation"
-  - title: "🔍 Others"
-    label: "others"
-change-template: "- $TITLE by @$AUTHOR (#$NUMBER)"
+  - title: '🚀 Features'
+    label: 'feature'
+  - title: '🐛 Bug Fixes'
+    label: 'bug'
+  - title: '🧰 Maintenance'
+    label: 'maintenance'
+  - title: '📚 Documentation'
+    label: 'documentation'
+  - title: '🔍 Others'
+    label: 'others'
+change-template: '- $TITLE by @$AUTHOR (#$NUMBER)'
 version-resolver:
   major:
     labels:
-      - "major"
+      - 'major'
   minor:
     labels:
-      - "minor"
+      - 'minor'
   patch:
     labels:
-      - "patch"
+      - 'patch'
 autolabeler:
-  - label: "documentation"
+  - label: 'documentation'
     files:
-      - "*.md"
+      - '*.md'
 template: |
   ## What’s Changed
 
