@@ -369,10 +369,10 @@ export default function Template1({ data }: Template1Props) {
         <Text style={styles.text}>
           The hourly variation of PM2.5 concentrations reveals insights into air
           quality patterns for {data.sites["grid name"][0]}. The highest PM2.5
-          value occurs at {highestPM25Hour.hour}:00, with a value of{" "}
-          {highestPM25Hour.pm2_5_raw_value} µg/m³, while the lowest is at{" "}
-          {lowestPM25Hour.hour}:00, with a value of{" "}
-          {lowestPM25Hour.pm2_5_raw_value} µg/m³. Peak concentrations are
+          value occurs at {highestPM25Hour?.hour}:00, with a value of{" "}
+          {highestPM25Hour?.pm2_5_raw_value} µg/m³, while the lowest is at{" "}
+          {lowestPM25Hour?.hour}:00, with a value of{" "}
+          {lowestPM25Hour?.pm2_5_raw_value} µg/m³. Peak concentrations are
           observed at night and in the morning, indicating potential
           contributing sources or activities. Daytime hours generally show lower
           PM2.5 levels, suggesting improved air quality during the day.
@@ -403,8 +403,8 @@ export default function Template1({ data }: Template1Props) {
               startDate
             }{" "}
             to {endDate}, the PM2.5 raw values ranged from{" "}
-            {data.monthly_pm[0].pm2_5_raw_value} µg/m³ to{" "}
-            {data.monthly_pm[1].pm2_5_raw_value} µg/m³ respectively.{"\n"}This
+            {data?.monthly_pm[0]?.pm2_5_raw_value} µg/m³ to{" "}
+            {data?.monthly_pm[1]?.pm2_5_raw_value} µg/m³ respectively.{"\n"}This
             pattern underscores the importance of continuous monitoring and the
             implementation of effective interventions to maintain air quality
             within safe limits. Ensuring good air quality is crucial for the

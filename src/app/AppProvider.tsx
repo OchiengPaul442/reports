@@ -38,7 +38,7 @@ const AppProvider = ({
   return (
     <Provider store={storeRef.current}>
       <PersistGate persistor={persistor}>
-        <SessionProvider>
+        <SessionProvider basePath="/reports/api/auth">
           <NextThemesProvider {...props}>{children}</NextThemesProvider>
         </SessionProvider>
       </PersistGate>
