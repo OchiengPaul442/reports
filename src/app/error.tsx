@@ -40,7 +40,7 @@ const Error: React.FC<ErrorProps> = ({ error, reset }) => {
         <div>
           <Button
             type="button"
-            onClick={() => router.push("/report")}
+            onClick={() => router.push("/home")}
             className="px-6 py-3 text-lg font-medium text-white bg-blue-700 rounded hover:bg-blue-800"
           >
             Go Home

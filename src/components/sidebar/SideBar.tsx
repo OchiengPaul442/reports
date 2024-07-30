@@ -7,13 +7,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { TbSettingsCog } from "react-icons/tb";
 import { RiAiGenerate } from "react-icons/ri";
-import { SiFiles } from "react-icons/si";
 
 const links = [
   {
-    href: ["/", "/report"],
+    href: ["/", "/home"],
     icon: RiAiGenerate,
-    label: "Report",
+    label: "Home",
   },
   // { href: "/files", icon: SiFiles, label: "Saved Files" },
   { href: "/settings", icon: TbSettingsCog, label: "Settings" },

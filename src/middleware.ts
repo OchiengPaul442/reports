@@ -9,7 +9,7 @@ interface Token {
 }
 
 export const config = {
-  matcher: ["/", "/settings", "/report/:path*", "/report"],
+  matcher: ["/", "/settings", "/home/:path*", "/home"],
 };
 
 export async function middleware(req: NextRequest) {

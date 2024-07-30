@@ -34,7 +34,7 @@ const Index: React.FC<FormComponentProps> = ({ children, btnText }) => {
         toast.success("User authenticated successfully", {
           style: { background: "green", color: "white", border: "none" },
         });
-        router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/report`);
+        router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/home`);
         return;
       } else {
         toast.error(<div className="capitalize">{result?.error}</div>, {

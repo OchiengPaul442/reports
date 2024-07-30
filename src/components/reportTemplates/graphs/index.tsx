@@ -102,7 +102,7 @@ export const BarChart: FC<BarChartProps> = ({
 
   useEffect(() => {
     const generateChart = async () => {
-      const response = await axios.post("/api/generateChart", {
+      const response = await axios.post("/reports/api/generateChart", {
         chartConfig,
         width,
         height,
@@ -182,7 +182,7 @@ export const LineChart: FC<BarChartProps> = ({
 
   useEffect(() => {
     const generateChart = async () => {
-      const response = await axios.post("/api/generateChart", {
+      const response = await axios.post("/reports/api/generateChart", {
         chartConfig,
         width,
         height,

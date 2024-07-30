@@ -69,9 +69,9 @@ export default function Header() {
 
   const links = [
     {
-      href: "/report",
+      href: "/home",
       icon: RiAiGenerate,
-      label: "Report",
+      label: "Home",
     },
     // { href: "/files", icon: SiFiles, label: "Saved Files" },
     { href: "/settings", icon: TbSettingsCog, label: "Settings" },
