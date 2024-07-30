@@ -17,6 +17,12 @@ const nextConfig = {
         permanent: true,
         basePath: false,
       },
+      {
+        source: '/login',
+        destination: '/reports',
+        permanent: true,
+        basePath: false,
+      },
     ];
   },
 };
