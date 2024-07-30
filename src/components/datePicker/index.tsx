@@ -19,7 +19,7 @@ export function DatePickerWithRange({
   onChange,
 }: React.HTMLAttributes<HTMLDivElement> & {
   value?: DateRange;
-  onChange?: () => void;
+  onChange?: (value: DateRange) => void;
 }) {
   const today = new Date();
 
