@@ -1,8 +1,8 @@
-"use client";
-import React from "react";
-import SideBar from "../components/sidebar/SideBar";
-import Header from "../components/header/Header";
-import NextTopLoader from "nextjs-toploader";
+'use client';
+import React from 'react';
+import SideBar from '../components/sidebar/SideBar';
+import Header from '../components/header/Header';
+import NextTopLoader from 'nextjs-toploader';
 
 interface LayoutProps {
   children: React.ReactNode;

@@ -1,5 +1,5 @@
-import { NextResponse, NextRequest } from "next/server";
-import { getToken } from "next-auth/jwt";
+import { NextResponse, NextRequest } from 'next/server';
+import { getToken } from 'next-auth/jwt';
 
 // Define an interface for the token
 interface Token {
@@ -8,7 +8,7 @@ interface Token {
 }
 
 export const config = {
-  matcher: ["/", "/settings", "/home/:path*", "/home"],
+  matcher: ['/', '/settings', '/home/:path*', '/home'],
 };
 
 export async function middleware(req: NextRequest) {
@@ -21,12 +21,12 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // Allow access to the API authentication routes or if the user is authenticated
-  if (pathname.includes("/api/auth") || token) {
+  if (pathname.includes('/api/auth') || token) {
     return NextResponse.next();
   }
 
   // Redirect them to login page if they are not authenticated
-  if (!token && pathname !== "/reports/login") {
+  if (!token && pathname !== '/reports/login') {
     // Use an absolute URL for the redirect
     return NextResponse.redirect(`${req.nextUrl.origin}/reports/login`);
   }
